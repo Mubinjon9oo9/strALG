@@ -1,18 +1,27 @@
-## Getting Started
+# Проект по структурам и алгоритмам обработки данных
+Этот репозиторий содержит работы по структурам и алгоритмам обработки данных для университета СибГУ. Вариант 25.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Содержание
+- Введение
+- Описание задач
+- Решения и алгоритмы
+- Заключение
 
-## Folder Structure
+## Введение
+В данном проекте рассматриваются различные структуры данных и алгоритмы их обработки. Проект выполнен в рамках учебной программы университета СибГУ.
 
-The workspace contains two folders by default, where:
+## Описание задач
+Задачи включают в себя реализацию и анализ различных структур данных и алгоритмов, таких как:
+- Списки
+- Стэки
+- Очереди
+- Деревья
+- Графы
+- Сортировки
+- Поиск
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Решения и алгоритмы
+Каждая задача сопровождается подробным описанием решения и соответствующим кодом. Все решения представлены на языке программирования Java.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Заключение
+Проект демонстрирует основные концепции и методы работы с данными, что является важной частью учебной программы по информатике и программированию.
