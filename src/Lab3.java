@@ -32,7 +32,7 @@ public class Lab3 {
      */
     public static boolean task2(String str) {
         for (int i = 0; i < str.length() - 1; i++) {
-            if ((str.charAt(i) == 'n' || str.charAt(i) == 'o') && (str.charAt(i + 1) == 'n' || str.charAt(i + 1) == 'o')) {
+            if ((str.charAt(i) == 'н' && str.charAt(i + 1) == 'о') || (str.charAt(i) == 'о' && str.charAt(i + 1) == 'н')) {
                 return true;
             }
         }
@@ -48,27 +48,10 @@ public class Lab3 {
      */
 
     public static String task3(String str) {
-        int start = 0;
-        int end = str.length() - 1;
-        while (start < str.length() && str.charAt(start) == ' ') {
-            start++;
-        }
-        while (end >= 0 && str.charAt(end) == ' ') {
-            end--;
-        }
-        StringBuilder result = new StringBuilder();
-        boolean isSpace = false;
-        for (int i = start; i <= end; i++) {
-            if (str.charAt(i) == ' ') {
-                if (!isSpace) {
-                    result.append(' ');
-                    isSpace = true;
-                }
-            } else {
-                result.append(str.charAt(i));
-                isSpace = false;
-            }
-        }
-        return result.toString();
+        str=str.strip();
+        do{
+            str = str.replace("  ", " ");
+        }while (str.contains("  "));
+        return str;
     }
 }

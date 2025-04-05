@@ -207,11 +207,15 @@ public class Lab6 {
      */
     public static void task4() {
         QueueA queue = new QueueA(100);
+        QueueA queue1 = new QueueA(100);
         try (Scanner scanner = new Scanner(new File("input.txt"))) {
             while (scanner.hasNextInt()) {
                 int x = scanner.nextInt();
                 if (x < 10) {
                     queue.enqueue(x);
+                }
+                else{
+                    queue1.enqueue(x);
                 }
             }
         } catch (FileNotFoundException e) {

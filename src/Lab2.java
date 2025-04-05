@@ -58,14 +58,16 @@ public class Lab2 {
      */
 
     public static double [] task2(int n, double[][] matrix, double[] sequence) {
-        double max = matrix[0][0];
+        double max = 0;
         int maxRow = 0;
         int maxCol = 0;
         for (int i = 0; i < n; i++) {
-            if (matrix[i][i] > max) {
-                max = matrix[i][i];
-                maxRow = i;
-                maxCol = i;
+            for (int j=0;j<n;j++){
+                if (matrix[i][j]>max){
+                    maxRow=i;
+                    maxCol=j;
+                    max = matrix[i][j];
+                }
             }
         }
         if (maxRow == maxCol) {

@@ -1,18 +1,23 @@
-import java.util.List;
+import java.util.*;
 
 public class Lab5 {
     
     public Lab5(){
         System.out.println("Task1");
-        List<Integer> L = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, 10);
+        List<Integer> L = new ArrayList<>();
+        L.add(1);
+        L.add(2);
+        L.add(-1);
+        L.add(4);
+        L.add(-1);
         System.out.println(task1(L));
         System.out.println("--------------------");
         System.out.println("Task2");
-        L = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        // L = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         System.out.println(task2(L));
         System.out.println("--------------------");
-        System.out.println("Task3");
-        System.out.println(member("7H", "(AD75,(3,(),(7H))"));
+        // System.out.println("Task3");
+        // System.out.println(member("7H", "(AD75,(3,(),(7H))"));
 
     }
 
@@ -37,7 +42,7 @@ public class Lab5 {
     public static List<Integer> task2(List<Integer> L) {
         if (!L.isEmpty()) {
             L.add(L.get(0));
-            L.remove(0);
+            L.remove(L.get(0));
         }
         return L;
     }

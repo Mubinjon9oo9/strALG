@@ -1,45 +1,45 @@
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Lab4 {
     public Lab4(){
         System.out.println("Task 1:");
-        String[][] f = {
-            {"Иван", "Иванов", "9а"},
-            {"Петр", "Петров", "10б"},
-            {"Сидор", "Сидоров", "9б"},
-            {"Андрей", "Андреев", "10а"},
-            {"Алексей", "Алексеев", "9а"},
-            {"Дмитрий", "Дмитриев", "10б"},
-            {"Александр", "Александров", "9б"},
-            {"Сергей", "Сергеев", "10а"},
-            {"Владимир", "Владимиров", "9а"},
-            {"Михаил", "Михайлов", "10б"},
-        };
-        String[][] g = task1(f);
-        for (String[] g1 : g) {
-            System.out.println(g1[0] + " " + g1[1] + " " + g1[2]);
-        }
+        List<Student> students = Arrays.asList(
+            new Student("Иван", "Иванов", "10б"),
+            new Student("Петр", "Петров", "9а"),
+            new Student("Анна", "Сидорова", "9б"),
+            new Student("Мария", "Павлова", "10а"),
+            new Student("Сергей", "Владимиров", "9б"),
+            new Student("Ирина", "Холодова", "10а"),
+            new Student("Валерий", "Яковлев", "9а")
+        );
+        List<Student> sortedStudents = task1(students);
+        sortedStudents.forEach(System.out::println);
         System.out.println("--------------------");
         System.out.println("Task 2:");
-        String[][] f2 = {
-            {"мяч", "2 руб. 50 коп.", "для детей от 3 до 8 лет"},
-            {"кукла", "3 руб. 50 коп.", "для детей от 5 до 10 лет"},
-            {"конструктор", "4 руб. 50 коп.", "для детей от 7 до 12 лет"},
-            {"кубики", "5 руб. 50 коп.", "для детей от 2 до 5 лет"},
-        };
-        System.out.println(task2(f2));
+        List<Toy> toys = Arrays.asList(
+            new Toy("мяч", "2 руб. 50 коп.", "для детей от 3 до 8 лет"),
+            new Toy("кукла", "3 руб. 50 коп.", "для детей от 5 до 10 лет"),
+            new Toy("конструктор", "4 руб. 50 коп.", "для детей от 7 до 12 лет"),
+            new Toy("кубики", "5 руб. 50 коп.", "для детей от 2 до 5 лет")
+        );
+        toys = task2(toys);
+        toys.forEach(System.out::println);
         System.out.println("--------------------");
         System.out.println("Task 3:");
-        String[][] f3 = {
-            {"вода", "1.0", "проводник"},
-            {"медь", "8.96", "проводник"},
-            {"серебро", "10.49", "проводник"},
-            {"стекло", "2.5", "изолятор"},
-            {"полупроводник", "2.5", "полупроводник"},
-            {"алюминий", "2.7", "проводник"},
-        };
-        String[][] g3 = task3(f3);
-        for (String[] g1 : g3) {
-            System.out.println(g1[0] + " " + g1[1] + " " + g1[2]);
-        }
+        List<Element> elements = Arrays.asList(
+            new Element("Медь", 8.96, "проводник"),
+            new Element("Серебро", 10.49, "проводник"),
+            new Element("Кремний", 2.33, "полупроводник"),
+            new Element("Резина", 1.1, "изолятор"),
+            new Element("Золото", 19.32, "проводник"),
+            new Element("Алюминий", 2.7, "проводник")
+        );
+
+        List<Element> conductors = filterAndSortConductors(elements);
+        conductors.forEach(System.out::println);
 
     }
     /*
@@ -48,20 +48,12 @@ public class Lab4 {
      * ж) Собрать в таблице g сведения об учениках 9 -х и 10-х классов, поместив
      * в начале сведения об учениках класса 9а, затем 9б и т.д., затем 10а, 10б и т. д.
      */
-    public static String[][] task1(String[][] f) {
-        String[][] g = new String[f.length][3];
-        int index = 0;
-        for (String[] f1 : f) {
-            if (f1[2].charAt(0) == '9') {
-                g[index++] = f1;
-            }
-        }
-        for (String[] f1 : f) {
-            if (f1[2].charAt(0) == '1') {
-                g[index++] = f1;
-            }
-        }
-        return g;
+    public static List<Student> task1(List<Student> students) {
+        return students.stream()
+            .filter(s -> s.className.startsWith("9") || s.className.startsWith("10"))
+            .sorted(Comparator.comparing((Student s) -> Integer.parseInt(s.className.replaceAll("\\D", "")))
+                .thenComparing(s -> s.className.replaceAll("\\d", ""))) 
+            .collect(Collectors.toList());
     }
 
     /*
@@ -70,14 +62,16 @@ public class Lab4 {
      * для которых игрушка предназначена (например, для детей от двух до пяти лет). Получить следующие сведения:
      * ж) имеется ли мяч ценой 2 руб. 50 коп., предназначенный детям от 3 до 8 лет?; если нет, занести сведения об этой игрушке в файл f.
      */
-
-    public static boolean task2(String[][] f) {
-        for (String[] f1 : f) {
-            if (f1[0].equals("мяч") && f1[1].equals("2 руб. 50 коп.") && f1[2].equals("для детей от 3 до 8 лет")) {
-                return true;
+    public static List<Toy> task2(List<Toy> toys) {
+        for (Toy toy : toys) {
+            if (toy.name.equals("мяч") && toy.price.equals("2 руб. 50 коп.") && toy.age.equals("для детей от 3 до 8 лет")) {
+                return toys;
             }
         }
-        return false;
+        toys.add(
+            new Toy("мяч", "2 руб. 50 коп.", "для детей от 3 до 8 лет")
+        );
+        return toys;
     }
 
 
@@ -86,23 +80,59 @@ public class Lab4 {
      * его удельный вес и проводимость (проводник, полупроводник, изолятор).
      * б) выбрать данные о проводниках и упорядочить их по убыванию удельных весов.
      */
-    public static String[][] task3(String[][] f) {
-        String[][] g = new String[f.length][3];
-        int index = 0;
-        for (String[] f1 : f) {
-            if (f1[2].equals("проводник")) {
-                g[index++] = f1;
-            }
+    public static List<Element> filterAndSortConductors(List<Element> elements) {
+        return elements.stream()
+            .filter(s -> s.type.equalsIgnoreCase("проводник")) 
+            .sorted(Comparator.comparingDouble((Element s) -> s.weight).reversed())
+            .collect(Collectors.toList());
+    }
+
+    class Student {
+        String firstName;
+        String lastName;
+        String className; // Например, "9а", "10б" и т.д.
+    
+        public Student(String firstName, String lastName, String className) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.className = className;
         }
-        for (int i = 0; i < index; i++) {
-            for (int j = i + 1; j < index; j++) {
-                if (Double.parseDouble(g[i][1]) < Double.parseDouble(g[j][1])) {
-                    String[] temp = g[i];
-                    g[i] = g[j];
-                    g[j] = temp;
-                }
-            }
+    
+        @Override
+        public String toString() {
+            return firstName + " " + lastName + " (" + className + ")";
         }
-        return g;
+    }
+
+    static class Toy{
+        String name;
+        String price;
+        String age;
+        
+        public Toy(String name, String price, String age){
+            this.name = name;
+            this.price = price;
+            this.age = age;
+        }
+        @Override
+        public String toString(){
+            return name + " " + price + " " + age;
+        }
+    }
+    class Element {
+        String name;
+        double weight;
+        String type;
+    
+        public Element(String name, double weight, String type) {
+            this.name = name;
+            this.weight = weight;
+            this.type = type;
+        }
+    
+        @Override
+        public String toString() {
+            return name + " (Удельный вес: " + weight + ", Тип: " + type + ")";
+        }
     }
 }
