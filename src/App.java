@@ -1,7 +1,8 @@
 
 public class App {
     public static void main(String[] args){
-        new Lab1();
+        new Lab7();
+
     }
 
 

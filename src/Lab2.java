@@ -1,40 +1,86 @@
+import java.util.Random;
+import java.util.Scanner;
 
 public class Lab2 {
 
     public Lab2() {
-        System.out.println("Task 1:");
-        double[][] matrix = {
-            {1, 2, 3},
-            {4, 5, 6},
-            {7, 8, 9}
-        };
-        double[] diagonal = task1(3, matrix);
-        for (double d : diagonal) {
-            System.out.println(d);
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        // // Task 1
+        // System.out.println("=== Task 1 ===");
+        // System.out.print("Введите размер квадратной матрицы (n): ");
+        // int n = scanner.nextInt();
+        // double[][] matrix = new double[n][n];
+        // System.out.println("Сгенерированная матрица:");
+        // for (int i = 0; i < n; i++) {
+        //     for (int j = 0; j < n; j++) {
+        //         matrix[i][j] = random.nextDouble() * 100; // Генерация случайных чисел от 0 до 100
+        //         System.out.printf("%.2f ", matrix[i][j]);
+        //     }
+        //     System.out.println();
+        // }
+        // double[] diagonal = task1(n, matrix);
+        // System.out.println("Главная диагональ:");
+        // for (double d : diagonal) {
+        //     System.out.printf("%.2f ", d);
+        // }
+        // System.out.println("\n====================");
+
+        // Task 2
+        System.out.println("=== Task 2 ===");
+        System.out.print("Введите длину последовательности (n + 5): ");
+        int sequenceLength = scanner.nextInt();
+        double[][] matrix = new double[sequenceLength][sequenceLength];
+        System.out.println("Сгенерированная матрица:");
+        for (int i = 0; i < sequenceLength; i++) {
+            for (int j = 0; j < sequenceLength; j++) {
+                matrix[i][j] = random.nextDouble() * 100;
+                matrix[0][0] =100;// Генерация случайных чисел от 0 до 100
+                System.out.printf("%.2f ", matrix[i][j]);
+            }
+            System.out.println();
         }
-        System.out.println("--------------------");
-        System.out.println("Task 2:");
-        double[] sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        sequence= task2(3, matrix, sequence);
+        double[] sequence = new double[sequenceLength];
+        System.out.println("Сгенерированная последовательность:");
+        for (int i = 0; i < sequence.length; i++) {
+            sequence[i] = random.nextDouble() * 100; // Генерация случайных чисел от 0 до 100
+            System.out.printf("%.2f ", sequence[i]);
+        }
+        System.out.println();
+        sequence = task2(sequenceLength, matrix, sequence);
+        System.out.println("Изменённая последовательность:");
         for (double d : sequence) {
-            System.out.println(d);
+            System.out.printf("%.2f ", d);
         }
-        System.out.println("--------------------");
-        System.out.println("Task 3:");
-        int[][] matrix2 = {
-            {0, 1, 0},
-            {1, 0, 1},
-            {0, 1, 0}
-        };
-        int[][] result = task3(3, 3, matrix2);
+        System.out.println("\n====================");
+
+        // Task 3
+        System.out.println("=== Task 3 ===");
+        System.out.print("Введите количество строк матрицы: ");
+        int rows = scanner.nextInt();
+        System.out.print("Введите количество столбцов матрицы: ");
+        int cols = scanner.nextInt();
+        int[][] matrix2 = new int[rows][cols];
+        System.out.println("Сгенерированная матрица:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix2[i][j] = random.nextInt(2); // Генерация случайных чисел 0 или 1
+                System.out.print(matrix2[i][j] + " ");
+            }
+            System.out.println();
+        }
+        int[][] result = task3(rows, cols, matrix2);
+        System.out.println("Результирующая матрица:");
         for (int[] row : result) {
             for (int i : row) {
                 System.out.print(i + " ");
             }
             System.out.println();
         }
-        
+        System.out.println("====================");
 
+        scanner.close();
     }
     /*
      * 14. Даны натуральное число n, действительная матрица  aij (i, j = 1,...,n) . Получить
@@ -70,13 +116,15 @@ public class Lab2 {
                 }
             }
         }
+        
         if (maxRow == maxCol) {
+
             for (int i = 0; i < sequence.length; i++) {
-                sequence[i] *= 10;
+                sequence[i] = Math.round(sequence[i]) * 10;
             }
         } else {
             for (int i = 0; i < sequence.length; i++) {
-                sequence[i] *= 0.5;
+                sequence[i] = Math.round(sequence[i]) * 0.5;
             }
         }
         return sequence;

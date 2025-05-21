@@ -3,21 +3,21 @@ import java.util.*;
 public class Lab5 {
     
     public Lab5(){
-        System.out.println("Task1");
-        List<Integer> L = new ArrayList<>();
-        L.add(1);
-        L.add(2);
-        L.add(-1);
-        L.add(4);
-        L.add(-1);
-        System.out.println(task1(L));
-        System.out.println("--------------------");
-        System.out.println("Task2");
-        // L = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        System.out.println(task2(L));
-        System.out.println("--------------------");
-        // System.out.println("Task3");
-        // System.out.println(member("7H", "(AD75,(3,(),(7H))"));
+        // System.out.println("Task1");
+        // List<Integer> L = new ArrayList<>();
+        // L.add(1);
+        // L.add(2);
+        // L.add(-1);
+        // L.add(4);
+        // L.add(-1);
+        // System.out.println(task1(L));
+        // System.out.println("--------------------");
+        // System.out.println("Task2");
+        // // L = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        // System.out.println(task2(L));
+        // System.out.println("--------------------");
+        System.out.println("Task3");
+        System.out.println(member("AD75", "(AD75, (3,(),(7H)))"));
 
     }
 
@@ -59,30 +59,34 @@ public class Lab5 {
      * а) логическую функцию member(A,L), проверяющую, входит ли атом А в список L;
      */
     public static boolean member(String A, String L) {
-        if (L.equals("")) {
-            return false;
-        }
-        if (L.charAt(0) == '(') {
-            int count = 1;
-            int i = 1;
-            while (count != 0) {
-                if (L.charAt(i) == '(') {
-                    count++;
-                } else if (L.charAt(i) == ')') {
-                    count--;
+        Stack<String> stack = new Stack<>();
+        L = L.trim(); // Убираем пробелы в начале и конце строки
+
+        // Разбиваем строку на токены, разделяя по запятым и скобкам
+        String[] tokens = L.split("(?=[(),])|(?<=[(),])");
+
+        for (String token : tokens) {
+            token = token.trim(); // Убираем пробелы вокруг токена
+
+            if (token.equals("(")) {
+                // Открывающая скобка: добавляем в стек
+                stack.push(token);
+            } else if (token.equals(")")) {
+                // Закрывающая скобка: убираем элементы из стека до открывающей скобки
+                while (!stack.isEmpty() && !stack.peek().equals("(")) {
+                    stack.pop();
                 }
-                i++;
+                if (!stack.isEmpty() && stack.peek().equals("(")) {
+                    stack.pop(); // Убираем открывающую скобку
+                }
+            } else if (!token.isEmpty() && !token.equals(",")) {
+                // Проверяем, совпадает ли текущий атом с искомым
+                if (token.equals(A)) {
+                    return true;
+                }
             }
-            return member(A, L.substring(1, i));
-        } else {
-            int i = 0;
-            while (i < L.length() && L.charAt(i) != ',') {
-                i++;
-            }
-            if (A.equals(L.substring(0, i))) {
-                return true;
-            }
-            return member(A, L.substring(i + 1));
         }
+
+        return false; // Если ничего не найдено
     }
 }
